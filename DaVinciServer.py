@@ -78,6 +78,7 @@ def infoAll():
     ret = ""
     for item in sessions:
         ret += item.asHTML + "</br>"
+    return ret
 
 
 @app.route('/session/info/<int:token>')
@@ -98,4 +99,4 @@ def join(token):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run("0.0.0.0", 5000)
