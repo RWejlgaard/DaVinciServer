@@ -48,11 +48,11 @@ class Session:
         self.slots.append(slot)
 
     def asHTML(self):
-        ret = f"<h1>{self.token}</h1></br>"
+        ret = f"<h1>{self.token}</h1>"
 
         for slot in self.slots:
             ret += \
-                f"<h2>Slot</h2></br>" \
+                f"<h2>Slot</h2>" \
                 f"<b>connected: </b> {slot.connected}</br>" \
                 f"<b>Is Host: </b> {slot.isHost}</br>" \
                 f"<b>IP Address: </b> {slot.ipAddress}</br>" \
@@ -73,12 +73,21 @@ def new_session():
     return str(id)
 
 
-@app.route("/session/info")
+@app.route("/sessions")
 def infoAll():
     ret = ""
     for item in sessions:
-        ret += item.asHTML + "</br>"
+        ret += item.asHTML()
     return ret
+
+
+@app.route("/session/delete/<int:token>")
+def delete(token):
+    for item in sessions:
+        if item.token == token:
+            sessions.remove(item)
+            return "OK"
+    return "ERROR"
 
 
 @app.route('/session/info/<int:token>')
